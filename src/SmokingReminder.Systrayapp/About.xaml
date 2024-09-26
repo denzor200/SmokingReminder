@@ -1,0 +1,56 @@
+﻿<Window x:Class="SmokingReminder.Systrayapp.About"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:SmokingReminder.Systrayapp"
+        mc:Ignorable="d"
+        Title="About" Height="277" Width="590" ResizeMode="NoResize">
+    <Grid Margin="0,0,0,-6">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="32*"/>
+            <ColumnDefinition Width="10*"/>
+            <ColumnDefinition Width="3*"/>
+            <ColumnDefinition Width="229*"/>
+            <ColumnDefinition Width="526*"/>
+        </Grid.ColumnDefinitions>
+        <TextBlock Name="TextWithHyperlinks" Grid.Column="4" HorizontalAlignment="Left" Margin="34,0,0,0" TextWrapping="Wrap" VerticalAlignment="Center" Height="116" Width="271">
+            ©2024 <Hyperlink
+    NavigateUri="https://github.com/denzor200"
+    ToolTip="denzor200"
+    RequestNavigate="Hyperlink_RequestNavigate">
+     Denis Mikhailov 
+</Hyperlink><LineBreak/>
+All rights reserved<LineBreak/><LineBreak/>
+
+Автор иконок: <Hyperlink
+    NavigateUri="https://www.flaticon.com/ru/authors/freepik"
+    ToolTip="Freepik"
+    RequestNavigate="Hyperlink_RequestNavigate">
+Freepik 
+</Hyperlink>  from <Hyperlink
+    NavigateUri="https://www.flaticon.com/ru/"
+    ToolTip="Flaticon"
+    RequestNavigate="Hyperlink_RequestNavigate">
+www.flaticon.com
+</Hyperlink>.<LineBreak/>
+Автор звуков: <Hyperlink
+    NavigateUri="https://freesound.org/people/Lenaviea"
+    ToolTip="Lenaviea"
+    RequestNavigate="Hyperlink_RequestNavigate">
+Lenaviea 
+</Hyperlink>  from <Hyperlink
+    NavigateUri="https://freesound.org"
+    ToolTip="Freesound"
+    RequestNavigate="Hyperlink_RequestNavigate">
+www.freesound.org
+</Hyperlink>.
+        </TextBlock>
+        <Image Grid.ColumnSpan="4" Margin="18,27,0,89" Source="/Red.ico" Stretch="Fill"/>
+        <Button Click="OnOK" Grid.Column="4" Content="OK" HorizontalAlignment="Left" Margin="133,163,0,0" VerticalAlignment="Top" Width="73"/>
+        <TextBlock Name="AppnameTextBlock"  Grid.Column="4" HorizontalAlignment="Left" Margin="34,40,0,0" TextWrapping="Wrap" Text="TextBlock" VerticalAlignment="Top"/>
+
+
+
+    </Grid>
+</Window>

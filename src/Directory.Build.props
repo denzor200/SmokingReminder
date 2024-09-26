@@ -1,0 +1,73 @@
+<Project>
+  <PropertyGroup>
+    <TargetFrameworks>net462;net472;netcoreapp3.1;net6.0-windows</TargetFrameworks>
+    <LangVersion>latest</LangVersion>
+    <UseWindowsForms>true</UseWindowsForms>
+	  <UseWPF>true</UseWPF>
+    <AppendTargetFrameworkToOutputPath>true</AppendTargetFrameworkToOutputPath>
+    <IsSampleProject>$(MSBuildProjectName.Contains('Sample'))</IsSampleProject>
+    <DebugSymbols>True</DebugSymbols>
+    <DebugType>embedded</DebugType>
+    
+    <Copyright>Copyright (c) 2024 Denis Mikhailov</Copyright>
+    <Company></Company>
+    <Authors>Denis Mikhailov</Authors>
+    <RepositoryUrl>https://github.com/denzor200/SmokingReminder</RepositoryUrl>
+    <RepositoryType>git</RepositoryType>
+    <PackageProjectUrl>https://github.com/denzor200/SmokingReminder</PackageProjectUrl>
+    <PackageLicenseExpression>MIT</PackageLicenseExpression>
+    <requireLicenseAcceptance>false</requireLicenseAcceptance>
+    <Description></Description>
+    <Summary></Summary>
+    <tags></tags>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="$(TargetFramework.StartsWith('net4'))">
+    <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)' == 'Debug'">
+    <CheckForOverflowUnderflow>true</CheckForOverflowUnderflow>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Nerdbank.GitVersioning" Version="3.5.109">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers</IncludeAssets>
+    </PackageReference>
+  </ItemGroup>
+
+  <Choose>
+    <When Condition=" '$(IsSampleProject)' != 'true' ">
+      <PropertyGroup>
+        <GenerateDocumentationFile>true</GenerateDocumentationFile>
+        <IsPackable>true</IsPackable>
+        <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+      </PropertyGroup>
+
+      <PropertyGroup>
+        <SignAssembly>true</SignAssembly>
+        <AssemblyOriginatorKeyFile>..\SmokingReminder.snk</AssemblyOriginatorKeyFile>
+        <DelaySign>false</DelaySign>
+        <PublicSign Condition=" '$(OS)' != 'Windows_NT' ">true</PublicSign>
+      </PropertyGroup>
+
+      <!-- SourceLink -->
+      <PropertyGroup>
+        <!-- Optional: Declare that the Repository URL can be published to NuSpec -->
+        <PublishRepositoryUrl>true</PublishRepositoryUrl>
+        <!-- Optional: Embed source files that are not tracked by the source control manager to the PDB -->
+        <EmbedUntrackedSources>true</EmbedUntrackedSources>
+        <!-- https://github.com/dotnet/sourcelink/blob/master/docs/README.md#embedallsources -->
+        <EmbedAllSources>true</EmbedAllSources>
+      </PropertyGroup>
+    </When>
+  </Choose>
+
+  <ItemGroup>
+    <None Remove="**\*.png;**\*.jpg;**\*.ico" />
+    <Resource Include="**\*.png;**\*.jpg;**\*.ico" />
+    <None Include="..\..\LICENSE" Pack="true" PackagePath="" />
+  </ItemGroup>
+
+</Project>

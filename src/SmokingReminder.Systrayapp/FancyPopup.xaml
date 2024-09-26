@@ -1,0 +1,146 @@
+﻿<UserControl
+  x:Class="SmokingReminder.Systrayapp.FancyPopup"
+  xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+  xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+  xmlns:tb="http://www.hardcodet.net/taskbar"
+  xmlns:local="clr-namespace:SmokingReminder.Systrayapp" xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"
+  Height="213"
+  Width="360" x:Name="me">
+    <UserControl.Resources>
+        <Storyboard x:Key="RotateIcon">
+            <DoubleAnimationUsingKeyFrames BeginTime="00:00:00" Storyboard.TargetName="image" Storyboard.TargetProperty="(UIElement.RenderTransform).(TransformGroup.Children)[2].(RotateTransform.Angle)">
+                <SplineDoubleKeyFrame KeyTime="00:00:00" Value="0"/>
+                <SplineDoubleKeyFrame KeySpline="0,0.284,0.39,1" KeyTime="00:00:01.4000000" Value="360"/>
+            </DoubleAnimationUsingKeyFrames>
+        </Storyboard>
+    </UserControl.Resources>
+    <UserControl.Triggers>
+        <EventTrigger RoutedEvent="tb:TaskbarIcon.PopupOpened">
+            <BeginStoryboard Storyboard="{StaticResource RotateIcon}" x:Name="RotateIcon_BeginStoryboard"/>
+        </EventTrigger>
+    </UserControl.Triggers>
+    <Grid Margin="0,0,35,0">
+        <Border
+      Width="Auto"
+      Height="Auto"
+      Margin="5,5,-28,5"
+      CornerRadius="10,10,10,10">
+            <Border.Effect>
+                <DropShadowEffect
+          Color="#FF474747" />
+            </Border.Effect>
+            <Border.Background>
+                <LinearGradientBrush
+          EndPoint="0.5,1"
+          StartPoint="0.5,0">
+                    <GradientStop
+            Color="#FF58C2FF"
+            Offset="0" />
+                    <GradientStop
+            Color="#FFFFFFFF"
+            Offset="1" />
+                </LinearGradientBrush>
+            </Border.Background>
+        </Border>
+        <Image
+      HorizontalAlignment="Left"
+      Margin="19,16,0,0"
+      VerticalAlignment="Top"
+      Width="72"
+      Height="72"
+      Source="/Images/free-icon-smoking-area-1144347.png"
+      Stretch="Fill" x:Name="image" RenderTransformOrigin="0.5,0.5" >
+            <Image.RenderTransform>
+                <TransformGroup>
+                    <ScaleTransform ScaleX="1" ScaleY="1"/>
+                    <SkewTransform AngleX="0" AngleY="0"/>
+                    <RotateTransform Angle="0"/>
+                    <TranslateTransform X="0" Y="0"/>
+                </TransformGroup>
+            </Image.RenderTransform>
+        </Image>
+
+        <Button
+  Click="OnSwitchClick"
+  ToolTip="{Binding Path=ToolTipText}"
+  HorizontalAlignment="Right"
+  VerticalAlignment="Bottom"
+  Width="158"
+  Height="29"
+  Content="{Binding SwitchButtonText}"
+  Margin="0,0,157,20"
+  BorderBrush="#FFFFFFFF">
+            <Button.Background>
+                <LinearGradientBrush
+      EndPoint="0,1"
+      StartPoint="0,0">
+                    <GradientStop
+        Color="#FFFFFFFF"
+        Offset="1" />
+                    <GradientStop
+        Color="#FFFFD197"
+        Offset="0.459" />
+                    <GradientStop
+        Color="#FFFFDBAD"
+        Offset="0" />
+                    <GradientStop
+        Color="#FFF18E23"
+        Offset="0.508" />
+                    <GradientStop
+        Color="#FFF9D4AC"
+        Offset="0.954" />
+                </LinearGradientBrush>
+            </Button.Background>
+        </Button>
+
+        <Button
+      IsEnabled="{Binding IsScheduledButtonEnabled}"
+      Name="UnscheduledButton"
+      Click="OnUnscheduledClick"
+      ToolTip="{Binding Path=ToolTipText}"
+      HorizontalAlignment="Right"
+      VerticalAlignment="Bottom"
+      Width="143"
+      Height="29"
+      Content="Внеплановый перекур"
+      Margin="0,0,0,20"
+      BorderBrush="#FFFFFFFF">
+            <Button.Background>
+                <LinearGradientBrush
+          EndPoint="0,1"
+          StartPoint="0,0">
+                    <GradientStop
+            Color="#FFFFFFFF"
+            Offset="1" />
+                    <GradientStop
+            Color="#FFFFD197"
+            Offset="0.459" />
+                    <GradientStop
+            Color="#FFFFDBAD"
+            Offset="0" />
+                    <GradientStop
+            Color="#FFF18E23"
+            Offset="0.508" />
+                    <GradientStop
+            Color="#FFF9D4AC"
+            Offset="0.954" />
+                </LinearGradientBrush>
+            </Button.Background>
+        </Button>
+        <TextBlock
+      Margin="19,117,197,82"
+      TextWrapping="Wrap"><Run Language="ru-ru" Text="Частота перекуров "/></TextBlock>
+
+
+        <xctk:ShortUpDown Name="IntervalShortUpDown" ValueChanged="OnIntervalValueChanged"  Minimum="1" Text="мин" Margin="127,115,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" />
+
+        <TextBlock
+Margin="173,117,124,82"
+TextWrapping="Wrap"><Run Language="ru-ru" Text=" мин"/></TextBlock>
+
+        <TextBlock Text="{Binding Description}" Margin="0,15,0,0" VerticalAlignment="Top" Height="74" TextWrapping="Wrap" FontWeight="Bold" FontSize="14" HorizontalAlignment="Right" Foreground="#FF575757" Width="219"/>
+        <Image
+    	Source="{Binding Path=IconSource}" Width="16" HorizontalAlignment="Left" Margin="19,0,0,23" Height="16" VerticalAlignment="Bottom" />
+
+    </Grid>
+</UserControl>
