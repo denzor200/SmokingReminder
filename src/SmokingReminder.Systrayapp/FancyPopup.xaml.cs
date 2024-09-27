@@ -24,11 +24,25 @@ namespace SmokingReminder.Systrayapp
             var smokingText = "Перекур ";
             if (lastSmoking != DateTime.MinValue)
             {
-                var ago = DateTime.Now - lastSmoking;
-                result.AppendLine($"Последний перекур был в {lastSmoking.TimeOfDay.ToString(@"hh\:mm")} ({Math.Floor(ago.TotalMinutes)} минут назад).");
+                var ago = Math.Floor((DateTime.Now - lastSmoking).TotalMinutes);
+                if (ago == 0) {
+                    result.AppendLine($"Последний перекур был только что.");
+                }
+                else
+                {
+                    result.AppendLine($"Последний перекур был в {lastSmoking.TimeOfDay.ToString(@"hh\:mm")} ({ago} минут назад).");
+                }
                 smokingText = "Следующий перекур\r\n";
             }
-            result.Append($"{smokingText}через {elapsed} мин.");
+            elapsed = Math.Floor(elapsed);
+            if (elapsed == 0)
+            {
+                result.Append($"{smokingText}меньше чем через минуту.");
+            }
+            else
+            {
+                result.Append($"{smokingText}через {elapsed} мин.");
+            }
             return result.ToString();
         }
 

@@ -91,9 +91,15 @@ namespace SmokingReminder.Systrayapp
                 var enabled = Properties.Settings.Default.enabled;
                 var interval = Properties.Settings.Default.interval;
                 var elapsed = Math.Floor(((App)Application.Current).TimeLeft / 1000 / 60);
-                return enabled ?
-                    $"Перекур через {elapsed} мин." :
-                    "Уведомления о перекурах выключены.";
+                if (enabled) {
+                    return elapsed != 0 ?
+                        $"Перекур через {elapsed} мин." :
+                        "Перекур меньше чем через минуту.";
+                }
+                else
+                {
+                    return "Уведомления о перекурах выключены.";
+                }
             }
         }
     }
