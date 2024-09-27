@@ -50,14 +50,24 @@ namespace SmokingReminder.Systrayapp
         {
             var enabled = Properties.Settings.Default.enabled;
             var interval = Properties.Settings.Default.interval;
+            var isScheduledButtonEnabled = enabled;
             var elapsed = Math.Floor(((App)Application.Current).TimeLeft / 1000 / 60);
+            var lastSmoking = ((App)Application.Current).LastSmoking;
+            if (lastSmoking != DateTime.MinValue)
+            {
+                var ago = Math.Floor((DateTime.Now - lastSmoking).TotalMinutes);
+                if (ago == 0)
+                {
+                    isScheduledButtonEnabled = false;
+                }
+            }
             return new FancyPopupDataContext()
             {
                 Description = enabled ?
                     MakeDescription(elapsed) :
                     "Уведомления о перекурах\r\nвыключены...",
                 SwitchButtonText = enabled ? "Выключить уведомления" : "Включить уведомления",
-                IsScheduledButtonEnabled = enabled
+                IsScheduledButtonEnabled = isScheduledButtonEnabled
             };
         }
     };
