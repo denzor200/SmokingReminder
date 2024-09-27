@@ -132,7 +132,7 @@
       TextWrapping="Wrap"><Run Language="ru-ru" Text="Частота перекуров "/></TextBlock>
 
 
-        <xctk:ShortUpDown Name="IntervalShortUpDown" ValueChanged="OnIntervalValueChanged"  Minimum="1" Text="мин" Margin="127,115,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" />
+        <xctk:ShortUpDown DefaultValue="1"  UpdateValueOnEnterKey="True"  Name="IntervalShortUpDown" ValueChanged="OnIntervalValueChanged"  Minimum="1" Text="мин" Margin="127,115,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" />
 
         <TextBlock
 Margin="173,117,124,82"

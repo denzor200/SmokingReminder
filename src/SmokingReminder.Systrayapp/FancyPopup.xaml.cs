@@ -53,20 +53,22 @@ namespace SmokingReminder.Systrayapp
     public partial class FancyPopup : UserControl
     {
         private System.Timers.Timer timer;
-        private short oldInterval;
-        private short interval;
-        private bool intervalChanged = false;
 
         public FancyPopup()
         {
             InitializeComponent();
             DataContext = FancyPopupDataContext.GetInstance();
-            var interval = Properties.Settings.Default.interval;
-            IntervalShortUpDown.Value = interval;
             timer = new Timer(1000 * 10);
             timer.Elapsed += OnTimer;
             timer.Enabled = true;
             timer.AutoReset = true;
+            this.IsVisibleChanged += (object s, DependencyPropertyChangedEventArgs e) => {
+                if ((bool)e.NewValue == true && (bool)e.OldValue == false)
+                {
+                    var interval = Properties.Settings.Default.interval;
+                    IntervalShortUpDown.Value = interval;
+                }
+            };
         }
 
         private void OnSwitchClick(object sender, RoutedEventArgs e)
@@ -85,10 +87,10 @@ namespace SmokingReminder.Systrayapp
 
         private void OnIntervalValueChanged(object sender, RoutedPropertyChangedEventArgs<object> e)
         {
-            if (!intervalChanged)
-                oldInterval = (short)(e.OldValue != null ? (short)e.OldValue : 0);
-            interval = (short)e.NewValue;
-            intervalChanged = true;
+            Properties.Settings.Default.old_interval = (short)(e.OldValue != null ? (short)e.OldValue : 0);
+            Properties.Settings.Default.interval = (short)e.NewValue;
+            Properties.Settings.Default.Save();
+            DataContext = FancyPopupDataContext.GetInstance();
         }
 
         private void OnUnscheduledClick(object sender, RoutedEventArgs e)
@@ -102,13 +104,6 @@ namespace SmokingReminder.Systrayapp
             Application.Current.Dispatcher.Invoke(
                 () =>
                 {
-                    if (intervalChanged)
-                    {
-                        Properties.Settings.Default.old_interval = oldInterval;
-                        Properties.Settings.Default.interval = interval;
-                        Properties.Settings.Default.Save();
-                        intervalChanged = false;
-                    }
                     DataContext = FancyPopupDataContext.GetInstance();
                 });
         }
