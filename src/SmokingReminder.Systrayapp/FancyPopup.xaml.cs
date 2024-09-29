@@ -30,7 +30,7 @@ namespace SmokingReminder.Systrayapp
                 }
                 else
                 {
-                    result.AppendLine($"Последний перекур был в {lastSmoking.TimeOfDay.ToString(@"hh\:mm")} ({ago} минут назад).");
+                    result.AppendLine($"Последний перекур был в {lastSmoking.TimeOfDay.ToString(@"hh\:mm")} ({ago} мин. назад).");
                 }
                 smokingText = "Следующий перекур\r\n";
             }
